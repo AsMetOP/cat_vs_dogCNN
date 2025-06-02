@@ -39,3 +39,38 @@ Conv2D (128 filters) → BatchNorm → MaxPooling
 Flatten → Dense(128) → Dropout(0.1)
 → Dense(64) → Dropout(0.1)
 → Dense(1, activation='sigmoid')
+✅ ReLU Activation is used in all Conv layers
+✅ Sigmoid Activation is used in the final layer for binary classification
+
+
+🧪 Model Compilation & Training
+model.compile(optimizer='adam',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(train_dataset,
+          epochs=10,
+          validation_data=validation_dataset)
+
+
+🔎 Predictions
+test_image = cv2.imread('catty1.jpeg')
+test_image = cv2.resize(test_image, (256, 256))
+test_input = test_image.reshape((1, 256, 256, 3))
+prediction = model.predict(test_input)
+print("Dog" if prediction > 0.5 else "Cat")
+
+
+📈 Results
+Achieved ~85–90% accuracy after 10 epochs
+Accurate prediction on new unseen images
+Stable training using Batch Normalization
+
+📌 Concepts Covered
+CNN (Convolutional Neural Networks)
+ReLU and Sigmoid Activations
+Batch Normalization
+Data Normalization (0-255 to 0-1)
+Image resizing and reshaping
+Overfitting prevention with Dropout
+Model evaluation with validation set
